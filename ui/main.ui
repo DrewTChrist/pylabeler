@@ -249,13 +249,11 @@
        <attribute name="title">
         <string>HTML Editor</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0" columnstretch="1,2">
-        <item row="2" column="1" rowspan="3">
-         <widget class="QWebEngineView" name="webEngineView_2">
-          <property name="url">
-           <url>
-            <string>file:///home/andrew/development/pylabeler/assets/test.html</string>
-           </url>
+       <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0" columnstretch="1,1,1">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>HTML</string>
           </property>
          </widget>
         </item>
@@ -272,11 +270,25 @@
         <item row="2" column="0">
          <widget class="QTextEdit" name="textEdit_2"/>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="text">
-           <string>HTML</string>
-          </property>
+        <item row="2" column="1" rowspan="3" colspan="2">
+         <widget class="QWidget" name="widget_3" native="true">
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="0" column="0">
+            <widget class="QWebEngineView" name="webEngineView_2">
+             <property name="maximumSize">
+              <size>
+               <width>400</width>
+               <height>600</height>
+              </size>
+             </property>
+             <property name="url">
+              <url>
+               <string>file:///home/andrew/development/pylabeler/assets/test.html</string>
+              </url>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
@@ -383,5 +395,22 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>724</x>
+     <y>430</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
