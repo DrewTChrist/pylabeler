@@ -4,5 +4,5 @@ def main():
     Application()
 
 
-#if __name__ == '__main__':
-#    Application()
+if __name__ == '__main__':
+    Application()

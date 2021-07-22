@@ -19,25 +19,21 @@
   <property name="windowTitle">
    <string>PyLabeler</string>
   </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>../assets/barcode.png</normaloff>../assets/barcode.png</iconset>
-  </property>
   <property name="iconSize">
    <size>
-    <width>452</width>
-    <height>452</height>
+    <width>28</width>
+    <height>28</height>
    </size>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="0">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0" columnstretch="0">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="enabled">
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -96,14 +92,14 @@
          <widget class="QWidget" name="labelView" native="true">
           <layout class="QGridLayout" name="gridLayout_4" columnstretch="1">
            <item row="0" column="0">
-            <widget class="QWebEngineView" name="webEngineView">
+            <widget class="QWebEngineView" name="webEngineView" native="true">
              <property name="maximumSize">
               <size>
                <width>400</width>
                <height>600</height>
               </size>
              </property>
-             <property name="url">
+             <property name="url" stdset="0">
               <url>
                <string>file:///home/andrew/development/pylabeler/assets/test.html</string>
               </url>
@@ -136,6 +132,12 @@
              <property name="text">
               <string>...</string>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>28</width>
+               <height>28</height>
+              </size>
+             </property>
              <property name="checkable">
               <bool>false</bool>
              </property>
@@ -149,6 +151,12 @@
              <property name="text">
               <string>...</string>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>28</width>
+               <height>28</height>
+              </size>
+             </property>
              <property name="autoRaise">
               <bool>true</bool>
              </property>
@@ -159,6 +167,12 @@
              <property name="text">
               <string>...</string>
              </property>
+             <property name="iconSize">
+              <size>
+               <width>28</width>
+               <height>28</height>
+              </size>
+             </property>
              <property name="autoRaise">
               <bool>true</bool>
              </property>
@@ -168,6 +182,12 @@
             <widget class="QToolButton" name="toolButton_table">
              <property name="text">
               <string>...</string>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>28</width>
+               <height>28</height>
+              </size>
              </property>
              <property name="autoRaise">
               <bool>true</bool>
@@ -224,14 +244,14 @@
          <widget class="QWidget" name="labelView_2" native="true">
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="0">
-            <widget class="QWebEngineView" name="webEngineView_2">
+            <widget class="QWebEngineView" name="webEngineView_2" native="true">
              <property name="maximumSize">
               <size>
                <width>400</width>
                <height>600</height>
               </size>
              </property>
-             <property name="url">
+             <property name="url" stdset="0">
               <url>
                <string>file:///home/andrew/development/pylabeler/assets/test.html</string>
               </url>
@@ -266,7 +286,7 @@
      <x>0</x>
      <y>0</y>
      <width>1450</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
