@@ -20,9 +20,14 @@ setuptools.setup(
     python_requires='>=3.6',
     include_package_data=True,
     install_requires=[
+        'pyqt5',
+        'pyqtwebengine',
+        'qtawesome',
+        'blabel',
     ],
     entry_points={
         'console_scripts': [
+            'pylabeler = app:main'
         ],
     },
 )
