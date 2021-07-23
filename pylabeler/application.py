@@ -3,6 +3,7 @@ import qtawesome
 from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
 from pylabeler.ui.file_io_dialog import FileIoDialog
+from pylabeler.ui.item_options_dialog import ItemOptionsDialog
 from pylabeler import icons
 import os
 import sys
@@ -48,6 +49,7 @@ class Application:
     def __setup_signals(self):
         self.__toolbuttons_signals()
         self.__menubar_signals()
+        self.__ui.elementTree.itemClicked.connect(lambda: self.open_item_options_dialog(self.__ui.elementTree.currentItem()))
 
     def __toolbuttons_signals(self):
         self.__ui.toolButton_qrcode.clicked.connect(lambda: self.add_tree_item(HtmlTreeItem('QR Code')))
@@ -103,3 +105,9 @@ class Application:
 
         self.__update_webengineviews()
         self.__enable_project_ui()
+
+    def open_item_options_dialog(self, item):
+        dialog = ItemOptionsDialog(item.text(0))
+        dialog.dialog()
+
+
