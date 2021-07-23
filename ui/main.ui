@@ -90,6 +90,12 @@
         </item>
         <item row="4" column="1">
          <widget class="QWidget" name="labelView" native="true">
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(211, 211, 211);</string>
+          </property>
           <layout class="QGridLayout" name="gridLayout_4" columnstretch="1">
            <item row="0" column="0">
             <widget class="QWebEngineView" name="webEngineView">
@@ -101,7 +107,7 @@
              </property>
              <property name="url">
               <url>
-               <string>file:///home/andrew/development/pylabeler/assets/test.html</string>
+               <string>about:blank</string>
               </url>
              </property>
             </widget>
