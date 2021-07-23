@@ -31,7 +31,8 @@ class Application:
 
     def __custom_ui_setup(self):
         self.__ui.tabWidget.setEnabled(False)
-        self.__ui.menuEdit.setEnabled(False)
+        self.__ui.actionUndo.setEnabled(False)
+        self.__ui.actionRedo.setEnabled(False)
         self.__ui.actionSave_Project.setEnabled(False)
         self.__ui.actionSave_As.setEnabled(False)
         self.__ui.actionClose_Project.setEnabled(False)
