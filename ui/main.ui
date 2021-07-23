@@ -41,7 +41,7 @@
       <property name="movable">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="dragAndDrop">
+      <widget class="QWidget" name="listEditor">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -49,7 +49,7 @@
         <enum>Qt::LeftToRight</enum>
        </property>
        <attribute name="title">
-        <string>Drag and Drop</string>
+        <string>List Editor</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0" columnstretch="0,1">
         <item row="4" column="0">
@@ -230,7 +230,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="htmlEditor_2">
+      <widget class="QWidget" name="htmlEditor">
        <attribute name="title">
         <string>HTML Editor</string>
        </attribute>
@@ -243,7 +243,7 @@
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QTextEdit" name="cssEditor"/>
+         <widget class="QTextEdit" name="cssTextBox"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="cssLabel">
@@ -253,7 +253,7 @@
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QTextEdit" name="htmlEditor"/>
+         <widget class="QTextEdit" name="htmlTextBox"/>
         </item>
         <item row="2" column="1" rowspan="3" colspan="2">
          <widget class="QWidget" name="labelView_2" native="true">
