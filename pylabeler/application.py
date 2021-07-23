@@ -11,11 +11,11 @@ class Application:
         self.main_window = QtWidgets.QMainWindow()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self.main_window)
-        self.set_toolbuttonbar_icons()
+        self.set_icons()
         self.main_window.show()
         sys.exit(self.qapp.exec_())
 
-    def set_toolbuttonbar_icons(self):
+    def set_icons(self):
         self.main_window.setWindowIcon(qtawesome.icon(icons.barcode))
         self.ui.toolButton_qrcode.setIcon(qtawesome.icon(icons.qrcode))
         self.ui.toolButton_barcode.setIcon(qtawesome.icon(icons.barcode))
