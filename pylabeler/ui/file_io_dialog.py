@@ -15,7 +15,7 @@ class FileIoDialog(QWidget):
         self.command = {
             'open': self.open_project_dialog,
             'save': self.save_project_dialog,
-            'saveas': self.save_project_dialog_as,
+            'saveas': self.save_project_as_dialog,
         }[command]
 
     def dialog(self):
