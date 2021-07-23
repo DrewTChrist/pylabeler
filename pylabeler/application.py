@@ -2,7 +2,9 @@ from PyQt5 import QtWidgets
 import qtawesome
 from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
+from pylabeler.ui.file_io_dialog import FileIoDialog
 from pylabeler import icons
+import os
 import sys
 
 
@@ -19,6 +21,7 @@ class Application:
         self.current_project = {
             'project_name': None,
             'project_directory': None,
+            'data_source': None,
             'html': None,
             'css': None
         }
@@ -28,6 +31,9 @@ class Application:
     def __custom_ui_setup(self):
         self.__ui.tabWidget.setEnabled(False)
         self.__ui.menuEdit.setEnabled(False)
+        self.__ui.actionSave_Project.setEnabled(False)
+        self.__ui.actionSave_As.setEnabled(False)
+        self.__ui.actionClose_Project.setEnabled(False)
         self.__set_icons()
         self.__setup_signals()
 
@@ -56,6 +62,14 @@ class Application:
 
     def __menubar_signals(self):
         self.__ui.actionNew_Project.triggered.connect(self.new_project)
+        self.__ui.actionOpen_Project.triggered.connect(self.open_project)
+
+    def __enable_project_ui(self):
+        self.__ui.tabWidget.setEnabled(True)
+        self.__ui.menuEdit.setEnabled(True)
+        self.__ui.actionSave_Project.setEnabled(True)
+        self.__ui.actionSave_As.setEnabled(True)
+        self.__ui.actionClose_Project.setEnabled(True)
 
     def add_tree_item(self, tree_item):
         self.__ui.elementTree.addTopLevelItem(tree_item)
@@ -71,3 +85,21 @@ class Application:
         self.current_project['css'] = '<style>h1 {text-align: center;}</style>'
         self.__update_webengineviews()
 
+    def open_project(self):
+        io_dialog = FileIoDialog('open')
+        self.current_project['project_directory'] = io_dialog.dialog()
+        io_dialog.close()
+        label_path = os.path.join(self.current_project['project_directory'], 'label.html')
+        if not os.path.exists(label_path):
+            raise Exception('problem')
+
+        try:
+            with open(label_path, 'r') as file:
+                self.current_project['html'] = file.read()
+                self.current_project['css'] = self.current_project['html'][self.current_project['html'].find('<style>'):self.current_project['html'].find('</style>')]
+                file.close()
+        except Exception as e:
+            print(e)
+
+        self.__update_webengineviews()
+        self.__enable_project_ui()
