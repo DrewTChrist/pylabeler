@@ -27,7 +27,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'pylabeler = app:main'
+            'pylabeler = pylabeler.app:main'
         ],
     },
 )
