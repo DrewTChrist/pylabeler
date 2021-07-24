@@ -90,19 +90,17 @@ class Application:
         self.current_project['project_directory'] = io_dialog.dialog()
         io_dialog.close()
         label_path = os.path.join(self.current_project['project_directory'], 'label.html')
-        if not os.path.exists(label_path):
-            raise Exception('problem')
+        if os.path.exists(self.current_project['project_directory']) and os.path.exists(label_path):
+            try:
+                with open(label_path, 'r') as file:
+                    self.current_project['html'] = file.read()
+                    self.current_project['css'] = self.current_project['html'][self.current_project['html'].find('<style>'):self.current_project['html'].find('</style>')]
+                    file.close()
+            except Exception as e:
+                print(e)
 
-        try:
-            with open(label_path, 'r') as file:
-                self.current_project['html'] = file.read()
-                self.current_project['css'] = self.current_project['html'][self.current_project['html'].find('<style>'):self.current_project['html'].find('</style>')]
-                file.close()
-        except Exception as e:
-            print(e)
-
-        self.__update_webengineviews()
-        self.__enable_project_ui()
+            self.__update_webengineviews()
+            self.__enable_project_ui()
 
     def open_item_options_dialog(self, item):
         dialog = ItemOptionsDialog(item.text(0))
