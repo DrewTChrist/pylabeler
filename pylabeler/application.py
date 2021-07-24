@@ -30,12 +30,7 @@ class Application:
         sys.exit(self.__qapp.exec_())
 
     def __custom_ui_setup(self):
-        self.__ui.tabWidget.setEnabled(False)
-        self.__ui.actionUndo.setEnabled(False)
-        self.__ui.actionRedo.setEnabled(False)
-        self.__ui.actionSave_Project.setEnabled(False)
-        self.__ui.actionSave_As.setEnabled(False)
-        self.__ui.actionClose_Project.setEnabled(False)
+        self.__disable_project_ui()
         self.__set_icons()
         self.__setup_signals()
 
@@ -67,26 +62,28 @@ class Application:
         self.__ui.actionNew_Project.triggered.connect(self.new_project)
         self.__ui.actionOpen_Project.triggered.connect(self.open_project)
 
+    def __project_ui_set_enabled(self, enabled):
+        self.__ui.tabWidget.setEnabled(enabled)
+        self.__ui.actionUndo.setEnabled(enabled)
+        self.__ui.actionRedo.setEnabled(enabled)
+        self.__ui.actionSave_Project.setEnabled(enabled)
+        self.__ui.actionSave_As.setEnabled(enabled)
+        self.__ui.actionClose_Project.setEnabled(enabled)
+
     def __enable_project_ui(self):
-        self.__ui.tabWidget.setEnabled(True)
-        self.__ui.menuEdit.setEnabled(True)
-        self.__ui.actionSave_Project.setEnabled(True)
-        self.__ui.actionSave_As.setEnabled(True)
-        self.__ui.actionClose_Project.setEnabled(True)
+        self.__project_ui_set_enabled(True)
+
+    def __disable_project_ui(self):
+        self.__project_ui_set_enabled(False)
 
     def add_tree_item(self, tree_item):
         self.__ui.elementTree.addTopLevelItem(tree_item)
 
     def new_project(self):
-        if not self.__ui.tabWidget.isEnabled():
-            self.__ui.tabWidget.setEnabled(True)
-
-        if not self.__ui.menuEdit.isEnabled():
-            self.__ui.menuEdit.setEnabled(True)
-
         self.current_project['html'] = '<h1>New Label</h1>'
         self.current_project['css'] = '<style>h1 {text-align: center;}</style>'
         self.__update_webengineviews()
+        self.__enable_project_ui()
 
     def open_project(self):
         io_dialog = FileIoDialog('open')
