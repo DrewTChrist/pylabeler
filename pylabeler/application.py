@@ -24,7 +24,8 @@ class Application:
             'project_directory': None,
             'data_source': None,
             'html': None,
-            'css': None
+            'css': None,
+            'saved': False
         }
 
         sys.exit(self.__qapp.exec_())
@@ -54,13 +55,20 @@ class Application:
         self.__ui.toolButton_text.clicked.connect(lambda: self.add_tree_item(HtmlTreeItem('Text')))
         self.__ui.toolButton_table.clicked.connect(lambda: self.add_tree_item(HtmlTreeItem('Table')))
 
-    def __update_webengineviews(self):
-        self.__ui.webEngineView.setHtml(f"{self.current_project['html']}{self.current_project['css']}")
-        self.__ui.webEngineView_2.setHtml(f"{self.current_project['html']}{self.current_project['css']}")
+    def __update_webengineviews(self, html=None):
+        if type(html) == str:
+            self.__ui.webEngineView.setHtml(html)
+            self.__ui.webEngineView_2.setHtml(html)
+        else:
+            self.__ui.webEngineView.setHtml(f"{self.current_project['html']}{self.current_project['css']}")
+            self.__ui.webEngineView_2.setHtml(f"{self.current_project['html']}{self.current_project['css']}")
 
     def __menubar_signals(self):
         self.__ui.actionNew_Project.triggered.connect(self.new_project)
         self.__ui.actionOpen_Project.triggered.connect(self.open_project)
+        self.__ui.actionClose_Project.triggered.connect(self.close_project)
+        self.__ui.actionSave_Project.triggered.connect(self.save_project)
+        self.__ui.actionSave_As.triggered.connect(self.save_project_as)
 
     def __project_ui_set_enabled(self, enabled):
         self.__ui.tabWidget.setEnabled(enabled)
@@ -76,12 +84,24 @@ class Application:
     def __disable_project_ui(self):
         self.__project_ui_set_enabled(False)
 
+    def __write_html_to_file(self):
+        label_path = os.path.join(self.current_project['project_directory'], 'label.html')
+        with open(label_path, 'w') as file:
+            file.write(f"{self.current_project['html']}<style>{self.current_project['css']}</style>")
+        file.close()
+
     def add_tree_item(self, tree_item):
         self.__ui.elementTree.addTopLevelItem(tree_item)
 
     def new_project(self):
-        self.current_project['html'] = '<h1>New Label</h1>'
-        self.current_project['css'] = '<style>h1 {text-align: center;}</style>'
+        self.current_project = {
+            'project_name': None,
+            'project_directory': None,
+            'data_source': None,
+            'html': '<h1>New Label</h1>',
+            'css': '<style>h1 {text-align: center;}</style>',
+            'saved': False
+        }
         self.__update_webengineviews()
         self.__enable_project_ui()
 
@@ -99,8 +119,39 @@ class Application:
             except Exception as e:
                 print(e)
 
+            self.current_project['saved'] = True
             self.__update_webengineviews()
             self.__enable_project_ui()
+            self.__ui.actionSave_Project.setEnabled(False)
+
+    def close_project(self):
+        self.current_project = {
+            'project_name': None,
+            'project_directory': None,
+            'data_source': None,
+            'html': None,
+            'css': None,
+            'saved': False
+        }
+        self.__update_webengineviews('')
+        self.__disable_project_ui()
+
+    def save_project(self):
+        if not self.current_project['saved']:
+            self.save_project_as()
+            self.current_project['saved'] = True
+        else:
+            self.__write_html_to_file()
+        self.__ui.actionSave_Project.setEnabled(False)
+
+    def save_project_as(self):
+        io_dialog = FileIoDialog('save')
+        self.current_project['project_directory'] = io_dialog.dialog()[0]
+        self.current_project['project_name'] = self.current_project['project_directory'].split('/')[-1]
+        os.mkdir(os.path.join(self.current_project['project_directory']))
+        self.__write_html_to_file()
+        io_dialog.close()
+        self.__ui.actionSave_Project.setEnabled(False)
 
     def open_item_options_dialog(self, item):
         dialog = ItemOptionsDialog(item.text(0))

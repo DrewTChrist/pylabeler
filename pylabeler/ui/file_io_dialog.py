@@ -15,7 +15,6 @@ class FileIoDialog(QWidget):
         self.command = {
             'open': self.open_project_dialog,
             'save': self.save_project_dialog,
-            'saveas': self.save_project_as_dialog,
         }[command]
 
     def dialog(self):
@@ -33,15 +32,6 @@ class FileIoDialog(QWidget):
     def save_project_dialog(self):
         options = QFileDialog.Options()
         options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "",
-                                                  "All Files (*);;Text Files (*.txt)", options=options)
-        if fileName:
-            print(fileName)
-
-    def save_project_as_dialog(self):
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        fileName, _ = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "",
-                                                  "All Files (*);;Text Files (*.txt)", options=options)
-        if fileName:
-            print(fileName)
+        filename = QFileDialog.getSaveFileName(self, "QFileDialog.getSaveFileName()", "",
+                                               "All Files (*)", options=options)
+        return filename
