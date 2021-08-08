@@ -1,0 +1,103 @@
+@startuml
+class Application {
+}
+
+class ui.MainWindow {
+}
+
+class ui.Ui_MainWindow {
+}
+
+class HtmlModel {
+}
+
+class HtmlParser {
+}
+
+class ui.DragAndDropWebEngine {
+}
+
+class ui.DraggableToolButton {
+}
+
+class ui.QrCodeToolButton {
+}
+
+class ui.BarcodeToolButton {
+}
+
+class ui.ImageToolButton {
+}
+
+class ui.TextToolButton {
+}
+
+class ui.TableToolButton {
+}
+
+class ui.HtmlTreeItem {
+}
+
+class ui.ItemOptionsDialog {
+}
+
+class ui.BarcodeDialog {
+}
+
+class ui.ImageDialog {
+}
+
+class ui.QrCodeDialog {
+}
+
+class ui.TableDialog {
+}
+
+class ui.TextDialog {
+}
+
+class ui.FileIoDialog {
+}
+
+abstract class data.Connection {
+}
+
+class data.CSVConnection {
+}
+
+class data.TextConnection {
+}
+
+class data.ExcelConnection {
+}
+
+class data.QuickbooksConnection {
+}
+
+class data.AccessConnection {
+}
+
+class data.SQLConnection {
+}
+
+class data.ODBCConnection {
+}
+
+
+Application *-- ui.MainWindow
+
+ui.MainWindow --|> ui.Ui_MainWindow
+ui.BarcodeToolButton --|> ui.DraggableToolButton
+ui.QrCodeToolButton --|> ui.DraggableToolButton
+ui.ImageToolButton --|> ui.DraggableToolButton
+ui.TableToolButton --|> ui.DraggableToolButton
+ui.TextToolButton --|> ui.DraggableToolButton
+
+data.Connection <|-- data.CSVConnection
+data.Connection <|-- data.TextConnection
+data.Connection <|-- data.ExcelConnection
+data.QuickbooksConnection --|> data.Connection
+data.AccessConnection --|> data.Connection
+data.SQLConnection --|> data.Connection
+data.ODBCConnection --|> data.Connection
+@enduml
