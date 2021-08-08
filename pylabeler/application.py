@@ -4,7 +4,7 @@ from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
 from pylabeler.ui.file_io_dialog import FileIoDialog
 from pylabeler.ui.item_options_dialog import ItemOptionsDialog
-from pylabeler import icons
+from pylabeler.ui import icons
 import os
 import sys
 
