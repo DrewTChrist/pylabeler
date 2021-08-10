@@ -3,14 +3,17 @@ from pylabeler.ui.item_options_dialog import ItemOptionsDialog
 from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
 from pylabeler.ui.html_editor import HtmlEditor
+from pylabeler.ui.about_dialog import AboutDialog
 from pylabeler.ui import icons
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QDesktopServices
+from PyQt5.QtCore import QUrl
 import qtawesome
 import os
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
+
 
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -19,6 +22,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         editor = HtmlEditor(self.htmlEditor)
         self.gridLayout_5.addWidget(editor, 2, 0, 1, 1)
         self.htmlTextBox = editor
+        self.about = None
         #self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_MARGINSETSTYLE, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
         self.current_project = {
@@ -69,6 +73,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionClose_Project.triggered.connect(self.close_project)
         self.actionSave_Project.triggered.connect(self.save_project)
         self.actionSave_As.triggered.connect(self.save_project_as)
+        self.actionAbout.triggered.connect(self.open_about)
+        self.actionGet_Help.triggered.connect(self.open_help)
 
     def _project_ui_set_enabled(self, enabled):
         self.tabWidget.setEnabled(enabled)
@@ -158,3 +164,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def open_item_options_dialog(self, item):
         dialog = ItemOptionsDialog(item.text(0))
         dialog.dialog()
+
+    def open_about(self):
+        self.about = AboutDialog()
+        self.about.dialog()
+
+    def open_help(self):
+        QDesktopServices.openUrl(QUrl('https://drewtchrist.github.io/pylabeler'))
+
+
