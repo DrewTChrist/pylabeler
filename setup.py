@@ -24,6 +24,7 @@ setuptools.setup(
         'pyqtwebengine',
         'qtawesome',
         'blabel',
+        'qt-material'
     ],
     entry_points={
         'console_scripts': [
