@@ -2,18 +2,28 @@ from pylabeler.ui.file_io_dialog import FileIoDialog
 from pylabeler.ui.item_options_dialog import ItemOptionsDialog
 from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
+from pylabeler.ui.html_editor import HtmlEditor
+from pylabeler.ui.about_dialog import AboutDialog
 from pylabeler.ui import icons
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtGui import QColor, QDesktopServices
+from PyQt5.QtCore import QUrl
 import qtawesome
 import os
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self._custom_ui_setup()
+        editor = HtmlEditor(self.htmlEditor)
+        self.gridLayout_5.addWidget(editor, 2, 0, 1, 1)
+        self.htmlTextBox = editor
+        self.about = None
+        #self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_MARGINSETSTYLE, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
         self.current_project = {
             'project_name': None,
@@ -31,11 +41,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _set_icons(self):
         self.setWindowIcon(qtawesome.icon(icons.barcode))
-        self.toolButton_qrcode.setIcon(qtawesome.icon(icons.qrcode))
-        self.toolButton_barcode.setIcon(qtawesome.icon(icons.barcode))
-        self.toolButton_image.setIcon(qtawesome.icon(icons.image))
-        self.toolButton_text.setIcon(qtawesome.icon(icons.text))
-        self.toolButton_table.setIcon(qtawesome.icon(icons.table))
+        self.toolButton_qrcode.setIcon(qtawesome.icon(icons.qrcode, color='white', color_active='white'))
+        self.toolButton_barcode.setIcon(qtawesome.icon(icons.barcode, color='white', color_active='white'))
+        self.toolButton_image.setIcon(qtawesome.icon(icons.image, color='white', color_active='white'))
+        self.toolButton_text.setIcon(qtawesome.icon(icons.text, color='white', color_active='white'))
+        self.toolButton_table.setIcon(qtawesome.icon(icons.table, color='white', color_active='white'))
 
     def _setup_signals(self):
         self._toolbuttons_signals()
@@ -63,6 +73,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionClose_Project.triggered.connect(self.close_project)
         self.actionSave_Project.triggered.connect(self.save_project)
         self.actionSave_As.triggered.connect(self.save_project_as)
+        self.actionAbout.triggered.connect(self.open_about)
+        self.actionGet_Help.triggered.connect(self.open_help)
 
     def _project_ui_set_enabled(self, enabled):
         self.tabWidget.setEnabled(enabled)
@@ -98,6 +110,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         }
         self._update_webengineviews()
         self._enable_project_ui()
+        #self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_STYLESETBACK, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
     def open_project(self):
         io_dialog = FileIoDialog('open')
@@ -133,20 +146,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def save_project(self):
         if not self.current_project['saved']:
             self.save_project_as()
-            self.current_project['saved'] = True
         else:
             self._write_html_to_file()
-        self.actionSave_Project.setEnabled(False)
+            self.actionSave_Project.setEnabled(False)
 
     def save_project_as(self):
         io_dialog = FileIoDialog('save')
-        self.current_project['project_directory'] = io_dialog.dialog()[0]
-        self.current_project['project_name'] = self.current_project['project_directory'].split('/')[-1]
-        os.mkdir(os.path.join(self.current_project['project_directory']))
-        self._write_html_to_file()
-        io_dialog.close()
-        self.actionSave_Project.setEnabled(False)
+        directory = io_dialog.dialog()[0]
+        if directory: 
+            self.current_project['project_directory'] = directory
+            self.current_project['project_name'] = self.current_project['project_directory'].split('/')[-1]
+            os.mkdir(os.path.join(self.current_project['project_directory']))
+            self._write_html_to_file()
+            self.current_project['saved'] = True
+            self.actionSave_Project.setEnabled(False)
 
     def open_item_options_dialog(self, item):
         dialog = ItemOptionsDialog(item.text(0))
         dialog.dialog()
+
+    def open_about(self):
+        self.about = AboutDialog()
+        self.about.dialog()
+
+    def open_help(self):
+        QDesktopServices.openUrl(QUrl('https://drewtchrist.github.io/pylabeler'))
+
+

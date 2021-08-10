@@ -51,7 +51,7 @@
        <attribute name="title">
         <string>List Editor</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0" columnstretch="0,1">
+       <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0" columnstretch="0,1" columnminimumwidth="350,0">
         <item row="4" column="0">
          <widget class="QTreeWidget" name="elementTree">
           <property name="enabled">
@@ -94,7 +94,7 @@
            <bool>false</bool>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(240, 240, 240);</string>
+           <string notr="true"/>
           </property>
           <layout class="QGridLayout" name="gridLayout_4" columnstretch="1">
            <item row="0" column="0">
@@ -240,7 +240,7 @@
        <attribute name="title">
         <string>HTML Editor</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0" columnstretch="1,1,1">
+       <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0" columnstretch="0,1,1" columnminimumwidth="350,0,0">
         <item row="0" column="0">
          <widget class="QLabel" name="htmlLabel">
           <property name="text">
@@ -248,23 +248,10 @@
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QTextEdit" name="cssTextBox"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="cssLabel">
-          <property name="text">
-           <string>CSS</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QTextEdit" name="htmlTextBox"/>
-        </item>
-        <item row="2" column="1" rowspan="3" colspan="2">
+        <item row="2" column="1" rowspan="2" colspan="2">
          <widget class="QWidget" name="labelView_2" native="true">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(240, 240, 240);</string>
+           <string notr="true"/>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="0">
@@ -277,7 +264,7 @@
              </property>
              <property name="url" stdset="0">
               <url>
-               <string/>
+               <string>about:blank</string>
               </url>
              </property>
             </widget>
@@ -287,16 +274,16 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="dataSourceEditor">
        <attribute name="title">
         <string>Data Source</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_6" columnstretch="0,1">
+       <layout class="QGridLayout" name="gridLayout_6" columnstretch="0,1" columnminimumwidth="350,0">
         <item row="0" column="1">
          <widget class="QTableView" name="dataSourceView"/>
         </item>
         <item row="0" column="0">
-         <widget class="QListWidget" name="listWidget">
+         <widget class="QListWidget" name="dataSourceList">
           <property name="font">
            <font>
             <pointsize>16</pointsize>
@@ -400,6 +387,8 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionGet_Help"/>
+    <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -443,6 +432,16 @@
   <action name="actionRedo">
    <property name="text">
     <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionGet_Help">
+   <property name="text">
+    <string>Get Help</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
    </property>
   </action>
  </widget>
