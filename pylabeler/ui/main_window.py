@@ -37,11 +37,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _set_icons(self):
         self.setWindowIcon(qtawesome.icon(icons.barcode))
-        self.toolButton_qrcode.setIcon(qtawesome.icon(icons.qrcode))
-        self.toolButton_barcode.setIcon(qtawesome.icon(icons.barcode))
-        self.toolButton_image.setIcon(qtawesome.icon(icons.image))
-        self.toolButton_text.setIcon(qtawesome.icon(icons.text))
-        self.toolButton_table.setIcon(qtawesome.icon(icons.table))
+        self.toolButton_qrcode.setIcon(qtawesome.icon(icons.qrcode, color='white', color_active='white'))
+        self.toolButton_barcode.setIcon(qtawesome.icon(icons.barcode, color='white', color_active='white'))
+        self.toolButton_image.setIcon(qtawesome.icon(icons.image, color='white', color_active='white'))
+        self.toolButton_text.setIcon(qtawesome.icon(icons.text, color='white', color_active='white'))
+        self.toolButton_table.setIcon(qtawesome.icon(icons.table, color='white', color_active='white'))
 
     def _setup_signals(self):
         self._toolbuttons_signals()
