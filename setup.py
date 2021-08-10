@@ -24,7 +24,7 @@ setuptools.setup(
         'pyqtwebengine',
         'qtawesome',
         'blabel',
-        'qt-material'
+        'qt-material',
         'qscintilla'
     ],
     entry_points={

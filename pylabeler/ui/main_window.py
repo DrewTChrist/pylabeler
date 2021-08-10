@@ -140,19 +140,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def save_project(self):
         if not self.current_project['saved']:
             self.save_project_as()
-            self.current_project['saved'] = True
         else:
             self._write_html_to_file()
-        self.actionSave_Project.setEnabled(False)
+            self.actionSave_Project.setEnabled(False)
 
     def save_project_as(self):
         io_dialog = FileIoDialog('save')
-        self.current_project['project_directory'] = io_dialog.dialog()[0]
-        self.current_project['project_name'] = self.current_project['project_directory'].split('/')[-1]
-        os.mkdir(os.path.join(self.current_project['project_directory']))
-        self._write_html_to_file()
-        io_dialog.close()
-        self.actionSave_Project.setEnabled(False)
+        directory = io_dialog.dialog()[0]
+        if directory: 
+            self.current_project['project_directory'] = directory
+            self.current_project['project_name'] = self.current_project['project_directory'].split('/')[-1]
+            os.mkdir(os.path.join(self.current_project['project_directory']))
+            self._write_html_to_file()
+            self.current_project['saved'] = True
+            self.actionSave_Project.setEnabled(False)
 
     def open_item_options_dialog(self, item):
         dialog = ItemOptionsDialog(item.text(0))
