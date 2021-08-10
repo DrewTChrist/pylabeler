@@ -25,6 +25,7 @@ setuptools.setup(
         'qtawesome',
         'blabel',
         'qt-material'
+        'qscintilla'
     ],
     entry_points={
         'console_scripts': [

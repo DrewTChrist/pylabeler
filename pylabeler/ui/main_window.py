@@ -2,8 +2,10 @@ from pylabeler.ui.file_io_dialog import FileIoDialog
 from pylabeler.ui.item_options_dialog import ItemOptionsDialog
 from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
+from pylabeler.ui.html_editor import HtmlEditor
 from pylabeler.ui import icons
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtGui import QColor
 import qtawesome
 import os
 
@@ -14,6 +16,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self._custom_ui_setup()
+        editor = HtmlEditor(self.htmlEditor)
+        self.gridLayout_5.addWidget(editor, 2, 0, 1, 1)
+        self.htmlTextBox = editor
+        #self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_MARGINSETSTYLE, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
         self.current_project = {
             'project_name': None,
@@ -98,6 +104,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         }
         self._update_webengineviews()
         self._enable_project_ui()
+        #self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_STYLESETBACK, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
     def open_project(self):
         io_dialog = FileIoDialog('open')
