@@ -1,0 +1,2 @@
+include pylabeler/assets/*.html
+include pylabeler/assets/*.js

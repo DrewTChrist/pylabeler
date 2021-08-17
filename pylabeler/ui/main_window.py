@@ -4,10 +4,12 @@ from pylabeler.ui.main import Ui_MainWindow
 from pylabeler.ui.html_tree_item import HtmlTreeItem
 from pylabeler.ui.html_editor import HtmlEditor
 from pylabeler.ui.about_dialog import AboutDialog
+from pylabeler.ui.droppable_webengine import DroppableWebEngine
 from pylabeler.ui import icons
+from pylabeler.html_model import HtmlModel
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtGui import QColor, QDesktopServices
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, QSize
 import qtawesome
 import os
 
@@ -29,6 +31,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         editor = HtmlEditor(self.htmlEditor)
         self.gridLayout_5.addWidget(editor, 2, 0, 1, 1)
         self.htmlTextBox = editor
+        self.model = HtmlModel()
+        webengine = DroppableWebEngine(self.labelView)
+        webengine.setMaximumSize(QSize(400, 600))
+        self.gridLayout_4.addWidget(webengine, 0, 0, 1, 1)
+        #self.gridLayout_4.setColumnStretch(0, 1)
+        self.webEngineView = webengine
         self.about = None
         # self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_MARGINSETSTYLE, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
@@ -89,17 +97,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             lambda: self.add_tree_item(HtmlTreeItem("Table"))
         )
 
-    def _update_webengineviews(self, html=None):
-        if type(html) == str:
-            self.webEngineView.setHtml(html)
-            self.webEngineView_2.setHtml(html)
+    def _update_webengineviews(self, model=None):
+        if type(model.html) == str:
+            # self.webEngineView.setHtml(html)
+            self.webEngineView.update(model)
+            self.webEngineView_2.setHtml(model.html)
         else:
-            self.webEngineView.setHtml(
-                f"{self.current_project['html']}{self.current_project['css']}"
-            )
-            self.webEngineView_2.setHtml(
-                f"{self.current_project['html']}{self.current_project['css']}"
-            )
+            # self.webEngineView.setHtml(
+            # self.webEngineView.update(f"{self.current_project['html']}{self.current_project['css']}")
+            self.webEngineView.update(model)
+            self.webEngineView_2.setHtml(model.html)
 
     def _menubar_signals(self):
         self.actionNew_Project.triggered.connect(self.new_project)
@@ -140,15 +147,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.elementTree.addTopLevelItem(tree_item)
 
     def new_project(self):
+        self.model.html = ""
+        with open(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/base.html'), 'r') as file:
+            self.model.html = file.read()
+            file.close()
+
         self.current_project = {
             "project_name": None,
             "project_directory": None,
             "data_source": None,
-            "html": "<h1>New Label</h1>",
+            # "html": "<h1>New Label</h1>",
+            # "html": html,
+            "html": self.model.html,
             "css": "<style>h1 {text-align: center;}</style>",
             "saved": False,
         }
-        self._update_webengineviews()
+        self._update_webengineviews(self.model)
         self._enable_project_ui()
         # self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_STYLESETBACK, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
@@ -160,7 +174,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.current_project["project_directory"], "label.html"
         )
         if os.path.exists(self.current_project["project_directory"]) and os.path.exists(
-            label_path
+                label_path
         ):
             try:
                 with open(label_path, "r") as file:

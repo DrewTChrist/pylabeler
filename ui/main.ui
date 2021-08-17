@@ -96,23 +96,7 @@
           <property name="styleSheet">
            <string notr="true"/>
           </property>
-          <layout class="QGridLayout" name="gridLayout_4" columnstretch="1">
-           <item row="0" column="0">
-            <widget class="QWebEngineView" name="webEngineView" native="true">
-             <property name="maximumSize">
-              <size>
-               <width>400</width>
-               <height>600</height>
-              </size>
-             </property>
-             <property name="url" stdset="0">
-              <url>
-               <string>about:blank</string>
-              </url>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QGridLayout" name="gridLayout_4" columnstretch="0"/>
          </widget>
         </item>
         <item row="1" column="0" colspan="2" alignment="Qt::AlignLeft">
@@ -255,14 +239,14 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="0" column="0">
-            <widget class="QWebEngineView" name="webEngineView_2" native="true">
+            <widget class="QWebEngineView" name="webEngineView_2">
              <property name="maximumSize">
               <size>
                <width>400</width>
                <height>600</height>
               </size>
              </property>
-             <property name="url" stdset="0">
+             <property name="url">
               <url>
                <string>about:blank</string>
               </url>
@@ -362,7 +346,7 @@
      <x>0</x>
      <y>0</y>
      <width>1450</width>
-     <height>21</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
