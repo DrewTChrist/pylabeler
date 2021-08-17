@@ -32,20 +32,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.gridLayout_5.addWidget(editor, 2, 0, 1, 1)
         self.htmlTextBox = editor
         self.model = HtmlModel()
+        self.model.dataChanged.connect(self._html_model_event)
+        self.htmlTextBox.textChanged.connect(self._text_editor_event)
         webengine = DroppableWebEngine(self.labelView)
         webengine.setMaximumSize(QSize(400, 600))
         self.gridLayout_4.addWidget(webengine, 0, 0, 1, 1)
-        #self.gridLayout_4.setColumnStretch(0, 1)
         self.webEngineView = webengine
         self.about = None
-        # self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_MARGINSETSTYLE, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
         self.current_project = {
             "project_name": None,
             "project_directory": None,
             "data_source": None,
             "html": None,
-            "css": None,
             "saved": False,
         }
 
@@ -97,16 +96,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             lambda: self.add_tree_item(HtmlTreeItem("Table"))
         )
 
-    def _update_webengineviews(self, model=None):
-        if type(model.html) == str:
-            # self.webEngineView.setHtml(html)
-            self.webEngineView.update(model)
-            self.webEngineView_2.setHtml(model.html)
-        else:
-            # self.webEngineView.setHtml(
-            # self.webEngineView.update(f"{self.current_project['html']}{self.current_project['css']}")
-            self.webEngineView.update(model)
-            self.webEngineView_2.setHtml(model.html)
+    def _html_model_event(self):
+        self._update_webengineviews()
+        self._update_text_editor()
+
+    def _text_editor_event(self):
+        self.model.set_html(self.htmlTextBox.text())
+        self._html_model_event()
+
+    def _update_webengineviews(self):
+        self.webEngineView.update(self.model)
+        self.webEngineView_2.setHtml(self.model.data())
+
+    def _update_text_editor(self):
+        self.htmlTextBox.setText(self.model.data())
 
     def _menubar_signals(self):
         self.actionNew_Project.triggered.connect(self.new_project)
@@ -135,61 +138,43 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def _write_html_to_file(self):
         label_path = os.path.join(
-            self.current_project["project_directory"], "label.html"
-        )
+            str(self.current_project["project_directory"]), "label.html")
         with open(label_path, "w") as file:
-            file.write(
-                f"{self.current_project['html']}<style>{self.current_project['css']}</style>"
-            )
+            file.write(self.model.html)
         file.close()
 
     def add_tree_item(self, tree_item):
         self.elementTree.addTopLevelItem(tree_item)
 
     def new_project(self):
-        self.model.html = ""
-        with open(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/base.html'), 'r') as file:
-            self.model.html = file.read()
-            file.close()
-
+        self.model.load_base()
         self.current_project = {
             "project_name": None,
             "project_directory": None,
             "data_source": None,
-            # "html": "<h1>New Label</h1>",
-            # "html": html,
             "html": self.model.html,
-            "css": "<style>h1 {text-align: center;}</style>",
             "saved": False,
         }
-        self._update_webengineviews(self.model)
         self._enable_project_ui()
-        # self.htmlTextBox.SendScintilla(self.htmlTextBox.SCI_STYLESETBACK, self.htmlTextBox.STYLE_DEFAULT, QColor(255, 0, 0))
 
     def open_project(self):
         io_dialog = FileIoDialog("open")
         self.current_project["project_directory"] = io_dialog.dialog()
         io_dialog.close()
         label_path = os.path.join(
-            self.current_project["project_directory"], "label.html"
+            str(self.current_project["project_directory"]), "label.html"
         )
         if os.path.exists(self.current_project["project_directory"]) and os.path.exists(
                 label_path
         ):
             try:
                 with open(label_path, "r") as file:
-                    self.current_project["html"] = file.read()
-                    self.current_project["css"] = self.current_project["html"][
-                        self.current_project["html"]
-                        .find("<style>"): self.current_project["html"]
-                        .find("</style>")
-                    ]
+                    self.model.set_html(file.read())
                     file.close()
             except Exception as e:
                 print(e)
 
             self.current_project["saved"] = True
-            self._update_webengineviews()
             self._enable_project_ui()
             self.actionSave_Project.setEnabled(False)
 
@@ -199,10 +184,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "project_directory": None,
             "data_source": None,
             "html": None,
-            "css": None,
             "saved": False,
         }
-        self._update_webengineviews("")
+        self.model.set_html("")
         self._disable_project_ui()
 
     def save_project(self):
@@ -217,9 +201,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         directory = io_dialog.dialog()[0]
         if directory:
             self.current_project["project_directory"] = directory
-            self.current_project["project_name"] = self.current_project[
-                "project_directory"
-            ].split("/")[-1]
+            self.current_project["project_name"] = self.current_project["project_directory"].split(
+                "/")[-1]
             os.mkdir(os.path.join(self.current_project["project_directory"]))
             self._write_html_to_file()
             self.current_project["saved"] = True

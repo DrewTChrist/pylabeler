@@ -1,8 +1,4 @@
 from PyQt5.QtWebEngineWidgets import QWebEngineView
-from PyQt5.QtCore import QUrl
-from .. import assets
-import importlib.resources as pkg_resources
-from pathlib import Path
 import os
 
 
@@ -26,6 +22,7 @@ class DroppableWebEngine(QWebEngineView):
     def run_js(self):
         interact = ""
         draggable = ""
+        resizable = ""
         with open(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/interact.min.js'), 'r') as file:
             interact = file.read()
             file.close()
@@ -33,8 +30,14 @@ class DroppableWebEngine(QWebEngineView):
         with open(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/draggable.js'), 'r') as file:
             draggable = file.read()
             file.close()
+
+        with open(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/resizable.js'), 'r') as file:
+            resizable = file.read()
+            file.close()
+
         self.page().runJavaScript(interact)
         self.page().runJavaScript(draggable)
+        self.page().runJavaScript(resizable)
 
     def update(self, model):
         self.page().setHtml(model.html)
