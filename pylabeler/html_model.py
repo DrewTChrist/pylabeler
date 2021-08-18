@@ -12,8 +12,7 @@ class HtmlModel(QAbstractItemModel):
         return self.html
 
     def load_base(self):
-        # with open(os.path.join('/'.join(__file__.split('/')[0:-1]), 'assets/base.html'), 'r') as file:
-        with open(os.path.normcase(os.path.join('/'.join(__file__.split('/')[0:-1]), 'assets/base.html')), 'r') as file:
+        with open(os.path.join(os.path.split(__file__)[0], 'assets', 'base.html'), 'r') as file:
             self.html = file.read()
             file.close()
         self.dataChanged.emit(QModelIndex(), QModelIndex())

@@ -23,15 +23,15 @@ class DroppableWebEngine(QWebEngineView):
         interact = ""
         draggable = ""
         resizable = ""
-        with open(os.path.normcase(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/interact.min.js')), 'r') as file:
+        with open(os.path.join(os.path.split(os.path.split(__file__)[0])[0], 'assets', 'interact.min.js'), 'r') as file:
             interact = file.read()
             file.close()
 
-        with open(os.path.normcase(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/draggable.js')), 'r') as file:
+        with open(os.path.join(os.path.split(os.path.split(__file__)[0])[0], 'assets', 'draggable.js'), 'r') as file:
             draggable = file.read()
             file.close()
 
-        with open(os.path.normcase(os.path.join('/'.join(__file__.split('/')[0:-2]), 'assets/resizable.js')), 'r') as file:
+        with open(os.path.join(os.path.split(os.path.split(__file__)[0])[0], 'assets', 'resizable.js'), 'r') as file:
             resizable = file.read()
             file.close()
 
