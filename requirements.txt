@@ -47,3 +47,4 @@ virtualenv==20.7.2
 WeasyPrint==52.5
 webencodings==0.5.1
 zopfli==0.1.8
+pyshortcuts~=1.8.0
