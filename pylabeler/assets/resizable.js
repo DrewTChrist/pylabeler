@@ -1,4 +1,4 @@
-interact('.resize-drag')
+interact('.resizable')
   .resizable({
     // resize from all edges and corners
     edges: { left: true, right: true, bottom: true, top: true },
@@ -21,14 +21,13 @@ interact('.resize-drag')
 
         target.setAttribute('data-x', x)
         target.setAttribute('data-y', y)
-        target.textContent = Math.round(event.rect.width) + '\u00D7' + Math.round(event.rect.height)
       }
     },
     modifiers: [
       // keep the edges inside the parent
-      interact.modifiers.restrictEdges({
-        outer: 'parent'
-      }),
+      //interact.modifiers.restrictEdges({
+      //  outer: 'parent'
+      //}),
 
       // minimum size
       interact.modifiers.restrictSize({
@@ -36,15 +35,15 @@ interact('.resize-drag')
       })
     ],
 
-    inertia: true
+    inertia: false
   })
   .draggable({
     listeners: { move: window.dragMoveListener },
-    inertia: true,
+    inertia: false,
     modifiers: [
-      interact.modifiers.restrictRect({
-        restriction: 'parent',
-        endOnly: true
-      })
+      //interact.modifiers.restrictRect({
+      //  restriction: 'parent',
+      //  endOnly: true
+      //})
     ]
   })
