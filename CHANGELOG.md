@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [v0.3.0](https://github.com/drewtchrist/pylabeler/releases/tag/v0.3.0) - 2021-08-18
+### Added
+* Set up pre commit hooks
+* Created an HtmlModel class to hold the html and connect signals to
+* Created a custom web engine that accepts drops
+* Created an assets directory that persists after install
+* Bundled interact.js with the projects in the assets directory
+* Connected interact.js with the web engine and html successfully
+* Added desktop shortcuts on installation with pyshortcuts
+
+### Changed
+* Tree view and tool buttons stay disabled when an item dialog is open to prevent opening more
+* Majorly refactored main_window.py by moving all file i/o logic into application.py
+
+### Removed
+
 ## [v0.2.0](https://github.com/drewtchrist/pylabeler/releases/tag/v0.2.0) - 2021-08-10
 ### Added
 * Added qt-material stylesheet
