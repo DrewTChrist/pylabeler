@@ -1,11 +1,14 @@
 import setuptools
+from post_install_command import PostInstallCommand
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+
 setuptools.setup(
     name="PyLabeler",
-    version="0.2.0",
+    version="0.3.0",
     author="Andrew Christiansen",
     author_email="andrewtaylorchristiansen@gmail.com",
     description="",
@@ -25,11 +28,15 @@ setuptools.setup(
         'qtawesome',
         'blabel',
         'qt-material',
-        'qscintilla'
+        'qscintilla',
+        'pyshortcuts'
     ],
     entry_points={
         'console_scripts': [
-             'pylabeler = pylabeler.application:Application'
+            'pylabeler = pylabeler.application:Application'
         ],
     },
+    cmdclass={
+        'install': PostInstallCommand
+    }
 )
