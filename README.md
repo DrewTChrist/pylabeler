@@ -1,11 +1,9 @@
 # PyLabeler
 
 ## Description
-PyLabeler is still in early development and is not suitable for use.
 
-PyLabeler is a free and open source label making software. The aim of the PyLabeler project is to provide 
-a free alternative to expensive license based labeling software. This project is the direct result of a search
-for inexpensive and stable labeling solutions.
+ARCHIVED
+
 
 ## Table of Contents
 1. [Installation](#installation)
